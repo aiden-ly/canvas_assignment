@@ -10,10 +10,11 @@ window.addEventListener("load", function () {
     let colourBox = document.getElementById("colour");
 
     let onScreen = [];
+    sizeBox.value = 8;
 
 
     class Square {
-        constructor(x, y, colour, size = 4) {
+        constructor(x, y, colour, size) {
             this.colour = colour;
             this.size = size;
             this.x = x;
@@ -34,7 +35,7 @@ window.addEventListener("load", function () {
 
     }
 
-    let currentObject = new Square(0, 0, colourBox.value, 10);
+    let currentObject = new Square(0, 0, colourBox.value, sizeBox.value);
 
     sizeBox.addEventListener("input", function (event) {
         if (this.value <= 0) {

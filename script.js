@@ -69,12 +69,22 @@ window.addEventListener("load", function (event) {
 
     let currentObject = new Square(0, 0, colourBox.value, sizeBox.value);
 
+    function updateLocal() {
+        localStorage.onScreen = JSON.stringify(onScreen);
+    }
+
     function loadShapes() {
         ctx.clearRect(0, 0, c.width, c.height);
         for (object of onScreen) {
             object.draw(ctx);
         }
+        updateLocal();
     }
+
+    if (localStorage.onScreen) {
+        onScreen = JSON.parse(localStorage.onScreen);
+    }
+
 
     sizeBox.addEventListener("input", function (event) {
         if (this.value <= 0) {
@@ -116,10 +126,6 @@ window.addEventListener("load", function (event) {
         loadShapes();
     });
 
-
-
-
-
     c.addEventListener("mousemove", function (event) {
         x = event.pageX - this.offsetLeft;
         y = event.pageY - this.offsetTop;
@@ -145,4 +151,5 @@ window.addEventListener("load", function (event) {
         newObject.draw(ctx);
     });
 
+   
 });

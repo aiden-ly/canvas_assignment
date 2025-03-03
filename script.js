@@ -21,6 +21,7 @@ window.addEventListener("load", function (event) {
             this.size = size;
             this.x = x;
             this.y = y;
+            this.shape = "Square";
         }
 
         draw(ctx) {
@@ -35,6 +36,7 @@ window.addEventListener("load", function (event) {
             this.size = size;
             this.x = x;
             this.y = y;
+            this.shape = "Triangle";
         }
 
         draw(ctx) {
@@ -56,6 +58,7 @@ window.addEventListener("load", function (event) {
             this.size = size;
             this.x = x;
             this.y = y;
+            this.shape = "Circle";
         }
 
         draw(ctx) {
@@ -82,7 +85,18 @@ window.addEventListener("load", function (event) {
     }
 
     if (localStorage.onScreen) {
-        onScreen = JSON.parse(localStorage.onScreen);
+        let localOnScreen = JSON.parse(localStorage.onScreen);
+        for (object of localOnScreen) {
+            if (object.shape === "Square") {
+                onScreen.push(new Square(object.x, object.y, object.colour, object.size));
+            }
+            else if (object.shape === "Triangle") {
+                onScreen.push(new Triangle(object.x, object.y, object.colour, object.size));
+            }
+            else if (object.shape === "Circle") {
+                onScreen.push(new Circle(object.x, object.y, object.colour, object.size));
+            }
+        }
     }
 
 
@@ -140,15 +154,16 @@ window.addEventListener("load", function (event) {
 
     c.addEventListener("mousedown", function (event) {
         let newObject;
-        if (currentObject instanceof Square) {
+        if (currentObject.shape === "Square") {
             newObject = new Square(x, y, currentObject.colour, currentObject.size);
-        } else if (currentObject instanceof Triangle) {
+        } else if (currentObject.shape === "Triangle") {
             newObject = new Triangle(x, y, currentObject.colour, currentObject.size);
-        } else if (currentObject instanceof Circle) {
+        } else if (currentObject.shape === "Circle") {
             newObject = new Circle(x, y, currentObject.colour, currentObject.size);
         }
         onScreen.push(newObject);
         newObject.draw(ctx);
+        loadShapes();
     });
 
    

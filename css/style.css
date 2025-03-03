@@ -11,18 +11,26 @@ body {
 
 input {
     margin: 10px;
+    transition: 0.2s;
 }
 
-input[type="button"] {
+input {
     cursor: pointer;
     padding: 10px;
     border: 3px solid black;
     border-radius: 10px;
     background-color: white;
-    transition: 0.2s;
 }
 
-input[type="button"]:hover {
+input[type="color"] {
+    cursor: pointer;
+    padding: 0;
+    border: 3px solid black;
+    border-radius: 10px;
+    background-color: white;
+}
+
+input:hover {
     background-color: grey;
 }
 

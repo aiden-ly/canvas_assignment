@@ -1,6 +1,7 @@
 window.addEventListener("load", function (event) {
     let x;
     let y;
+    let isDragging;
     let c = document.getElementById("canvasbox");
     let ctx = c.getContext("2d");
     let undoButton = document.getElementById("undo");
@@ -45,10 +46,10 @@ window.addEventListener("load", function (event) {
             ctx.moveTo(this.x, this.y);
             ctx.lineTo(this.x + this.size / 2, this.y - this.size);
             ctx.lineTo(this.x - this.size / 2, this.y - this.size);
-            ctx.closePath();       
+            ctx.closePath();
             ctx.fill();
         }
-        
+
 
     }
 
@@ -65,7 +66,7 @@ window.addEventListener("load", function (event) {
             ctx.fillStyle = this.colour;
             ctx.beginPath();
             ctx.arc(this.x, this.y, this.size / 2, 0, Math.PI * 2);
-            ctx.closePath();   
+            ctx.closePath();
             ctx.fill();
         }
     }
@@ -144,6 +145,20 @@ window.addEventListener("load", function (event) {
         x = event.pageX - this.offsetLeft;
         y = event.pageY - this.offsetTop;
 
+        if (isDragging) {
+            let newObject;
+            if (currentObject.shape === "Square") {
+                newObject = new Square(x, y, currentObject.colour, currentObject.size);
+            } else if (currentObject.shape === "Triangle") {
+                newObject = new Triangle(x, y, currentObject.colour, currentObject.size);
+            } else if (currentObject.shape === "Circle") {
+                newObject = new Circle(x, y, currentObject.colour, currentObject.size);
+            }
+            onScreen.push(newObject);
+            newObject.draw(ctx);
+        }
+
+
         loadShapes();
 
         currentObject.x = x;
@@ -153,6 +168,7 @@ window.addEventListener("load", function (event) {
     });
 
     c.addEventListener("mousedown", function (event) {
+        isDragging = true;
         let newObject;
         if (currentObject.shape === "Square") {
             newObject = new Square(x, y, currentObject.colour, currentObject.size);
@@ -163,8 +179,12 @@ window.addEventListener("load", function (event) {
         }
         onScreen.push(newObject);
         newObject.draw(ctx);
-        loadShapes();
     });
 
-   
+    c.addEventListener("mouseup", function (event) {
+        isDragging = false;
+    })
+
+
+
 });

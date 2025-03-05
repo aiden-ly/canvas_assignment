@@ -17,10 +17,19 @@ window.addEventListener("load", function (event) {
     let colourBox = document.getElementById("colour");
 
     let onScreen = [];
-    sizeBox.value = 8;
-
+    sizeBox.value = 8; // Default value
 
     class Square {
+        /**
+        * Initializes square object
+        * Same parameters apply to other shapes
+        *
+        * @param {Number} x
+        * @param {Number} y
+        * @param {String} colour
+        * @param {Number} size
+        *
+        */
         constructor(x, y, colour, size) {
             this.colour = colour;
             this.size = size;
@@ -29,6 +38,11 @@ window.addEventListener("load", function (event) {
             this.shape = "Square";
         }
 
+        /** 
+        * Draws square on the canvas
+        * 
+        * @param {Object} ctx
+        */
         draw(ctx) {
             ctx.fillStyle = this.colour;
             ctx.fillRect(this.x, this.y, this.size, this.size);
@@ -53,8 +67,6 @@ window.addEventListener("load", function (event) {
             ctx.closePath();
             ctx.fill();
         }
-
-
     }
 
     class Circle {
@@ -77,16 +89,16 @@ window.addEventListener("load", function (event) {
 
     let currentObject = new Square(0, 0, colourBox.value, sizeBox.value);
 
-    function updateLocal() {
-        localStorage.onScreen = JSON.stringify(onScreen);
-    }
-
+    /**
+    * Loads all of the shapes in the onScreen array to the canvas
+    * Also updates the array to localStorage
+    */
     function loadShapes() {
         ctx.clearRect(0, 0, c.width, c.height);
         for (object of onScreen) {
             object.draw(ctx);
         }
-        updateLocal();
+        localStorage.onScreen = JSON.stringify(onScreen);
     }
 
     if (localStorage.onScreen) {
@@ -104,32 +116,44 @@ window.addEventListener("load", function (event) {
         }
     }
 
-
+    /**
+    * Updates the current object's size and prevents it from going under 1
+    */
     sizeBox.addEventListener("input", function (event) {
         if (this.value <= 0) {
             this.value = 1;
         }
-
         currentObject.size = this.value;
     });
 
+    /**
+    * Updates the current object's colour
+    */
     colourBox.addEventListener("input", function (event) {
         currentObject.colour = this.value;
     });
 
+    /**
+    * Remove most recent shape and update canvas
+    */
     undoButton.addEventListener("click", function (event) {
         if (onScreen.length > 0) {
             onScreen.pop();
             loadShapes();
         }
-
     });
 
+    /**
+    * Clear all shapes in the array and reload canvas
+    */
     clearButton.addEventListener("click", function (event) {
         onScreen = [];
         loadShapes();
     });
 
+    /**
+    * Changes the shape of the current object
+    */
     square.addEventListener("click", function (event) {
         currentObject = new Square(0, 0, colourBox.value, sizeBox.value);
         loadShapes();
@@ -145,6 +169,10 @@ window.addEventListener("load", function (event) {
         loadShapes();
     });
 
+    /**
+    * Creates a preview of the shape that follows the cursor
+    * If dragging, paint the canvas while the mouse is moving
+    */
     c.addEventListener("mousemove", function (event) {
         x = event.pageX - this.offsetLeft;
         y = event.pageY - this.offsetTop;
@@ -162,7 +190,6 @@ window.addEventListener("load", function (event) {
             newObject.draw(ctx);
         }
 
-
         loadShapes();
 
         currentObject.x = x;
@@ -171,6 +198,9 @@ window.addEventListener("load", function (event) {
 
     });
 
+    /**
+    * Paint shape for single clicks
+    */
     c.addEventListener("mousedown", function (event) {
         isDragging = true;
         let newObject;
@@ -188,7 +218,5 @@ window.addEventListener("load", function (event) {
     c.addEventListener("mouseup", function (event) {
         isDragging = false;
     })
-
-
 
 });

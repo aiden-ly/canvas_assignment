@@ -6,6 +6,8 @@ This file styles the page and the UI
 
 #canvasbox {
     background-color: white;
+    border-radius: 20px;
+    margin: auto;
     margin-bottom: 30px;
 }
 
@@ -13,6 +15,11 @@ body {
     background-color: grey;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     text-align: center;
+    background-image: linear-gradient(rgb(150, 187, 223), rgb(5, 5, 48));
+}
+
+p {
+    color: white;
 }
 
 input {
@@ -21,6 +28,7 @@ input {
 }
 
 input {
+    font-family: 'Trebuchet MS';
     cursor: pointer;
     padding: 10px;
     border: 3px solid black;
@@ -39,6 +47,4 @@ input[type="color"] {
 input:hover {
     background-color: grey;
 }
-
-
 

@@ -16,6 +16,8 @@ body {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     text-align: center;
     background-image: linear-gradient(rgb(150, 187, 223), rgb(5, 5, 48));
+    height: 120vh;
+    overflow: hidden;
 }
 
 p {
@@ -39,6 +41,7 @@ input {
 input[type="color"] {
     cursor: pointer;
     padding: 0;
+    height: 20px;
     border: 3px solid black;
     border-radius: 10px;
     background-color: white;

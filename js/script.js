@@ -1,3 +1,7 @@
+// Group Members: Aiden Ly, Lucas Leung
+// Date: March 3, 2025
+// This file provides the logic for the canvas drawing assignment
+
 window.addEventListener("load", function (event) {
     let x;
     let y;
